@@ -1,0 +1,54 @@
+# =========================
+# Flask Backend
+# =========================
+Flask==3.0.0
+Flask-Cors==4.0.0
+Werkzeug==3.0.1
+Jinja2==3.1.3
+itsdangerous==2.1.2
+click==8.1.7
+
+# =========================
+# Environment & Config
+# =========================
+python-dotenv==1.0.1
+
+# =========================
+# Machine Learning
+# =========================
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.4.2
+joblib==1.4.2
+
+# =========================
+# Model Serialization (PKL)
+# =========================
+pickle-mixin==1.0.2
+
+# =========================
+# API / HTTP Requests
+# =========================
+requests==2.32.3
+
+# =========================
+# UI & Forms (Optional but Useful)
+# =========================
+Flask-WTF==1.2.1
+WTForms==3.1.2
+
+
+
+# OCR + PDF
+pillow==10.3.0
+pytesseract==0.3.13
+opencv-python==4.10.0.84
+PyMuPDF==1.24.9
+pdf2image==1.17.0
+
+
+# =========================
+# Production Server (Later)
+# =========================
+gunicorn==22.0.0
+

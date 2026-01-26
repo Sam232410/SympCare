@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Health Insights - Sympcare</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --accent-1: #5b9dff;
+      --accent-2: #3aa0ff;
+      --bg-start: #07102a;
+      --bg-mid: #0d1b3a;
+      --bg-end: #050814;
+      --muted: rgba(230,238,248,0.75);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      color: #eaf4ff;
+      background: radial-gradient(
+        1200px 600px at 10% 10%,
+        var(--bg-start) 0%,
+        var(--bg-mid) 25%,
+        #081023 60%,
+        var(--bg-end) 100%
+      );
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+      text-align: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* 🧬 DNA BACKGROUND */
+    .dna-bg {
+      position: fixed;
+      top: 12%;
+      left: 50%;
+      width: 1800px;
+      opacity: 0.12;
+      transform: translate(-50%, -50%);
+      z-index: -2;
+      filter: drop-shadow(0 0 35px rgba(109,166,255,0.6));
+      pointer-events: none;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      color: var(--accent-1);
+      margin-bottom: 10px;
+      text-shadow: 0 0 12px rgba(91,157,255,0.5);
+    }
+
+    p {
+      color: var(--muted);
+      margin-bottom: 30px;
+      font-size: 15px;
+    }
+
+    .insights-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 1000px;
+      z-index: 1;
+    }
+
+    .card {
+      position: relative;
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.02),
+        rgba(255,255,255,0.01)
+      );
+      border: 1px solid rgba(91,157,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+      width: 240px;
+      box-shadow:
+        0 8px 30px rgba(3,8,20,0.6),
+        inset 0 0 20px rgba(91,157,255,0.04);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow:
+        0 14px 45px rgba(2,12,40,0.8),
+        0 0 25px rgba(91,157,255,0.15);
+    }
+
+    .disease-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--accent-1);
+    }
+
+    .info-icon {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-weight: bold;
+      color: var(--accent-2);
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .info-icon:hover {
+      color: #87b7ff;
+    }
+
+    .description {
+      font-size: 0.9rem;
+      color: rgba(230,238,248,0.82);
+    }
+
+    .precaution-box {
+      display: none;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: #cce0ff;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .button-container {
+      margin-top: 40px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 25px;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .btn-back {
+      color: #eaf4ff;
+      border: 1px solid #eaf4ff;
+      background: transparent;
+    }
+
+    .btn-back:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .btn-next {
+      background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+      color: white;
+      border: none;
+      box-shadow: 0 8px 30px rgba(59,148,255,0.18);
+    }
+
+    .btn-next:hover {
+      transform: translateY(-2px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 520px) {
+      h1 { font-size: 1.8rem; }
+      .card { width: 90%; }
+      .dna-bg { width: 1200px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🧬 DNA BACKGROUND IMAGE -->
+  <img src="{{ url_for('static', filename='images/bg2.png') }}" class="dna-bg" alt="DNA Background">
+
+  <h1>Health Insights</h1>
+  <p>Based on your uploaded report, here are possible detected conditions:</p>
+
+  <div class="insights-container" id="diseaseList"></div>
+
+  <!-- Side by Side Buttons -->
+  <div class="button-container">
+    <a href="upload.html" class="btn btn-back">⬅ Back</a>
+    <a href="about.html" class="btn btn-next">Next ➡</a>
+  </div>
+
+  <script>
+    const diseases = [
+      { name: "Anemia", description: "Low hemoglobin levels detected, indicating possible Anemia.", precaution: "Eat iron-rich foods (like spinach, lentils, red meat) and take prescribed iron supplements." },
+      { name: "Leukemia", description: "Abnormal white blood cell count observed, potential Leukemia risk.", precaution: "Consult a hematologist immediately for proper diagnosis and treatment options." },
+      { name: "Malaria", description: "Indicators suggest possible malarial infection.", precaution: "Use mosquito nets, take prescribed medication, and stay hydrated." },
+      { name: "Iron Deficiency Anemia", description: "Low iron concentration found in report, suggesting Iron Deficiency Anemia.", precaution: "Consume iron and vitamin C-rich foods, and follow your doctor’s advice." },
+      { name: "Viral Infection", description: "Elevated lymphocyte count, suggesting a viral infection.", precaution: "Take rest, stay hydrated, and monitor fever or other symptoms." },
+      { name: "Bacterial Infection", description: "Increased neutrophil count, indicating possible bacterial infection.", precaution: "Follow antibiotic course as prescribed by your doctor and maintain hygiene." },
+      { name: "Dengue", description: "Platelet drop detected — possible Dengue infection.", precaution: "Avoid NSAIDs, rest well, drink fluids, and monitor platelet levels regularly." },
+      { name: "Sepsis", description: "Abnormal immune markers — potential sepsis risk, needs urgent attention.", precaution: "Seek immediate medical help; do not self-treat." },
+      { name: "Thalassemia", description: "Irregular hemoglobin structure may suggest Thalassemia.", precaution: "Regular blood checkups and iron chelation therapy may be required under medical supervision." }
+    ];
+
+    const container = document.getElementById("diseaseList");
+
+    diseases.forEach((d, index) => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.innerHTML = `
+        <div class="info-icon" onclick="togglePrecaution(${index})">🛈</div>
+        <div class="disease-name">${d.name}</div>
+        <div class="description">${d.description}</div>
+        <div class="precaution-box" id="precaution-${index}">
+          <strong>Precaution:</strong> ${d.precaution}
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    function togglePrecaution(index) {
+      const box = document.getElementById(`precaution-${index}`);
+      box.style.display = box.style.display === "block" ? "none" : "block";
+    }
+  </script>
+
+</body>
+</html>
