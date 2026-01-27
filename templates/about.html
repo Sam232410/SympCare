@@ -113,7 +113,7 @@ p {
 <body>
 
 <!-- 🧬 BACKGROUND IMAGE -->
-<img src="/home/res/Desktop/BE_PROJECT_IMPLEMENTATION/BE_FLASK_UI_BACKEND_INTEGRATION_V2/static/images/bg2.png" class="dna-bg" alt="DNA Background">
+<img src="{{ url_for('static', filename='images/bg2.png') }}" class="dna-bg" alt="DNA Background">
 
 <div class="container">
   <h1>About Sympcare</h1>
@@ -128,7 +128,7 @@ p {
   <!-- CENTERED BUTTONS -->
   <div class="btn-row">
     <button class="btn" id="learnMoreBtn">Learn More</button>
-    <a href="index.html" class="btn">Back to Home</a>
+    <a href="/" class="btn">Back to Home</a>
   </div>
 
   <div class="more-content" id="moreContent">

@@ -91,7 +91,7 @@
       font-size: 0.95rem;
       font-weight: 500;
       transition: all 0.3s ease;
-    }
+    }index
 
     .next-btn:hover {
       background: rgba(109,166,255,0.3);
@@ -109,16 +109,15 @@
 <body>
 
   <!-- 🧬 DNA BACKGROUND -->
-  <img src="/home/res/Desktop/BE_PROJECT_IMPLEMENTATION/BE_FLASK_UI_BACKEND_INTEGRATION_V2/static/images/bg2.png" class="dna-bg" alt="DNA Background">
+  <img src="{{ url_for('static', filename='images/bg2.png') }}" class="dna-bg" alt="DNA Background">
 
   <div class="content">
     <h1>Diagnosis</h1>
     <p>AI-driven health recommendations based on your data.</p>
 
     <div class="nav-row">
-      <a href="index.html" class="back-link">← Back to Home</a>
-      <a href="insights.html" class="next-btn">Next →</a>
-    </div>
+      <a href="{{ url_for('upload') }}" class="back-link">&larr; Back to Upload</a>
+      <a href="{{ url_for('insights') }}" class="next-btn">View Health Insights &rarr;</a>
   </div>
 
 </body>
