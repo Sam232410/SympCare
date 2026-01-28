@@ -4,10 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Upload Report - Sympcare</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ===== YOUR ORIGINAL CSS (UNCHANGED) ===== */
     :root {
       --accent-1: #5b9dff;
       --accent-2: #3aa0ff;
@@ -24,26 +24,40 @@
 
     body {
       margin: 0;
-      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      font-family: "Poppins", system-ui;
       color: #eaf4ff;
-      background: radial-gradient(1200px 600px at 10% 10%, var(--bg-start) 0%, var(--bg-mid) 25%, #081023 60%, var(--bg-end) 100%);
+      background: radial-gradient(1200px 600px at 10% 10%, var(--bg-start), var(--bg-mid), #081023, var(--bg-end));
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       padding: 32px;
     }
-    /* 🧬 DNA BACKGROUND */
-.dna-bg {
-  position: fixed;
-  top: 12%;
-  left: 50%;
-  width: 1800px;
-  opacity: 0.12;
-  transform: translate(-50%, -50%);
-  z-index: -2;
-  pointer-events: none;
-}
 
+    /* DNA BACKGROUND */
+    .dna-bg {
+      position: fixed;
+      top: 12%;
+      left: 50%;
+      width: 1800px;
+      opacity: 0.12;
+      transform: translate(-50%, -50%);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    /* ===== NEW LAYOUT ===== */
+    .layout {
+      display: flex;
+      gap: 30px;
+      width: 100%;
+      max-width: 1200px;
+      justify-content: center;
+      transition: all 0.6s ease;
+    }
+
+    .layout.show-table {
+      justify-content: space-between;
+    }
 
     .card {
       width: 100%;
@@ -53,10 +67,27 @@
       padding: 28px;
       box-shadow: 0 10px 40px rgba(3,8,20,0.6);
       border: 1px solid rgba(91,157,255,0.06);
+      transition: transform 0.6s ease;
+    }
+
+    .layout.show-table .card {
+      transform: translateX(-40px);
+    }
+
+    .table-panel {
+      width: 100%;
+      max-width: 420px;
+      opacity: 0;
+      transform: translateX(60px);
+      transition: all 0.6s ease;
+    }
+
+    .layout.show-table .table-panel {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     h1 { text-align: center; font-size: 28px; }
-
     .subtitle {
       text-align: center;
       color: rgba(230,238,248,0.7);
@@ -74,7 +105,7 @@
       text-align: center;
     }
 
-    .upload-icon { font-size: 48px; margin-bottom: 10px; }
+    .upload-icon { font-size: 48px; }
     .drop-text { font-size: 16px; font-weight: 500; }
     .drop-note { font-size: 13px; opacity: .75; }
 
@@ -91,7 +122,6 @@
     .btn {
       padding: 10px 18px;
       border-radius: 10px;
-      font-weight: 600;
       cursor: pointer;
       background: transparent;
       color: var(--muted);
@@ -109,7 +139,8 @@
     .file-info, .status { font-size: 13px; margin-top: 8px; }
 
     .spinner {
-      width: 14px; height: 14px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       border: 2px solid rgba(255,255,255,0.18);
       border-top-color: white;
@@ -117,19 +148,20 @@
       display: inline-block;
       margin-right: 6px;
     }
+
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ===== ADDED (TABLE STYLE – MATCHES UI) ===== */
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
     }
+
     th, td {
       border: 1px solid rgba(91,157,255,0.25);
       padding: 8px;
-      text-align: left;
     }
+
     td input {
       width: 100%;
       background: transparent;
@@ -141,37 +173,37 @@
 </head>
 
 <body>
-  <!-- 🧬 DNA BACKGROUND -->
-<img src="{{ url_for('static', filename='images/bg2.png') }}" class="dna-bg" alt="DNA Background">
-  
-<main class="card">
 
-  <h1>Upload Report</h1>
-  <div class="subtitle">Securely upload your medical report for analysis</div>
+<img src="{{ url_for('static', filename='images/bg2.png') }}" class="dna-bg">
 
-  <form class="dropzone" onsubmit="return false;">
-    <input id="fileInput" type="file" accept="application/pdf" />
-    <div class="upload-icon">📂</div>
-    <div class="drop-text">Drag and drop your file here</div>
-    <div class="drop-note">Only PDF files up to 20 MB are accepted</div>
+<div class="layout" id="layout">
 
-    <div class="actions">
-      <button type="button" id="chooseBtn" class="btn">Choose File</button>
-      <button type="button" id="uploadBtn" class="btn btn-upload" disabled>Extract</button>
-      <button type="button" id="analyzeBtn" class="btn btn-upload" style="display:none;">
-        Analyze
-      </button>
-    </div>
+  <!-- LEFT CARD -->
+  <main class="card">
+    <h1>Upload Report</h1>
+    <div class="subtitle">Securely upload your medical report for analysis</div>
 
-    <div id="fileInfo" class="file-info"></div>
-    <div id="status" class="status"></div>
-  </form>
+    <form class="dropzone" onsubmit="return false;">
+      <input id="fileInput" type="file" accept="application/pdf" />
+      <div class="upload-icon">📂</div>
+      <div class="drop-text">Drag and drop your file here</div>
+      <div class="drop-note">Only PDF files up to 20 MB</div>
 
-  <!-- 🔹 EXTRACTED TABLE APPEARS HERE -->
-  <div id="resultArea"></div>
+      <div class="actions">
+        <button type="button" id="chooseBtn" class="btn">Choose File</button>
+        <button type="button" id="uploadBtn" class="btn btn-upload" disabled>Extract</button>
+        <button type="button" id="analyzeBtn" class="btn btn-upload" style="display:none;">Analyze</button>
+      </div>
 
-  <a class="back-home" href="/">⬅ Back to Home</a>
-</main>
+      <div id="fileInfo" class="file-info"></div>
+      <div id="status" class="status"></div>
+    </form>
+  </main>
+
+  <!-- RIGHT TABLE -->
+  <div class="table-panel" id="tablePanel"></div>
+
+</div>
 
 <script>
   const fileInput  = document.getElementById("fileInput");
@@ -180,25 +212,21 @@
   const analyzeBtn = document.getElementById("analyzeBtn");
   const fileInfo   = document.getElementById("fileInfo");
   const status     = document.getElementById("status");
-  const resultArea = document.getElementById("resultArea");
+  const tablePanel = document.getElementById("tablePanel");
+  const layout     = document.getElementById("layout");
 
   let selectedFile = null;
 
   chooseBtn.onclick = () => fileInput.click();
 
   fileInput.onchange = e => {
-    const file = e.target.files[0];
-    if (!file || !file.name.endsWith(".pdf")) {
-      status.textContent = "Only PDF allowed";
-      return;
-    }
-    selectedFile = file;
-    fileInfo.textContent = `${file.name} (${(file.size/1024/1024).toFixed(2)} MB)`;
+    const f = e.target.files[0];
+    if (!f || !f.name.endsWith(".pdf")) return;
+    selectedFile = f;
+    fileInfo.textContent = `${f.name} (${(f.size/1024/1024).toFixed(2)} MB)`;
     uploadBtn.disabled = false;
-    status.textContent = "";
   };
 
-  // 🔹 EXTRACT BUTTON
   uploadBtn.onclick = async () => {
     const fd = new FormData();
     fd.append("file", selectedFile);
@@ -216,21 +244,21 @@
   function renderTable(data) {
     let html = "<table><tr><th>Test</th><th>Value</th></tr>";
     for (const k in data) {
-      html += `
-        <tr>
-          <td>${k}</td>
-          <td><input data-key="${k}" value="${data[k] ?? ""}"></td>
-        </tr>`;
+      html += `<tr>
+        <td>${k}</td>
+        <td><input data-key="${k}" value="${data[k] ?? ""}"></td>
+      </tr>`;
     }
     html += "</table>";
-    resultArea.innerHTML = html;
+
+    tablePanel.innerHTML = html;
+    layout.classList.add("show-table");
   }
 
-  // 🔹 ANALYZE BUTTON
   analyzeBtn.onclick = async () => {
-    const inputs = document.querySelectorAll("input[data-key]");
-    let payload = {};
-    inputs.forEach(i => payload[i.dataset.key] = i.value);
+    const payload = {};
+    document.querySelectorAll("input[data-key]")
+      .forEach(i => payload[i.dataset.key] = i.value);
 
     const res = await fetch("/analyze", {
       method: "POST",

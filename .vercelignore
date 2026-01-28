@@ -1,0 +1,22 @@
+# Virtual environments (CRITICAL)
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# ML / native binaries
+*.so
+*.pkl
+*.pt
+*.h5
+
+# Data files
+*.csv
+*.zip
+*.db
+
+# Jupyter / cache
+.ipynb_checkpoints/
+.cache/
