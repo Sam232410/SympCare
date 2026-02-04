@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>System Overview · SympCare</title>
+
+<style>
+:root {
+    --accent: #6da6ff;
+    --accent-soft: rgba(109,166,255,0.25);
+    --bg-dark: #0b0a23;
+}
+
+/* ================= BASE ================= */
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: radial-gradient(circle at top left, #14124a, var(--bg-dark));
+    color: white;
+    padding: 60px;
+}
+
+h1 {
+    font-size: 42px;
+    color: var(--accent);
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    color: #cfd8ff;
+    font-size: 15px;
+    max-width: 760px;
+}
+
+/* ================= SECTIONS ================= */
+.section {
+    margin-top: 42px;
+    padding: 36px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+    border: 1px solid var(--accent-soft);
+    box-shadow: 0 0 45px rgba(109,166,255,0.18);
+}
+
+/* ================= DATA INGESTION ================= */
+.ingest-box {
+    border: 2px dashed var(--accent-soft);
+    border-radius: 16px;
+    padding: 42px;
+    text-align: center;
+}
+
+.ingest-box strong {
+    font-size: 18px;
+}
+
+input[type=file] {
+    margin-top: 16px;
+    color: white;
+}
+
+button {
+    margin-top: 20px;
+    padding: 11px 30px;
+    border-radius: 26px;
+    border: none;
+    background: var(--accent);
+    color: #0b0a23;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ================= PIPELINE ================= */
+.timeline {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.phase {
+    padding: 20px;
+    border-radius: 14px;
+    background: rgba(109,166,255,0.12);
+    border: 1px solid var(--accent-soft);
+    opacity: 0;
+    transform: translateY(18px);
+    animation: phaseIn 0.6s ease forwards;
+}
+
+.phase span {
+    font-size: 13px;
+    color: #d7e3ff;
+}
+
+.phase strong {
+    display: block;
+    margin-top: 6px;
+    font-size: 15px;
+    color: var(--accent);
+}
+
+/* stagger animation */
+.phase:nth-child(1) { animation-delay: 0.2s; }
+.phase:nth-child(2) { animation-delay: 0.6s; }
+.phase:nth-child(3) { animation-delay: 1.0s; }
+.phase:nth-child(4) { animation-delay: 1.4s; }
+.phase:nth-child(5) { animation-delay: 1.8s; }
+
+@keyframes phaseIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================= INTELLIGENCE LOG ================= */
+.log {
+    margin-top: 22px;
+    padding: 20px 24px;
+    border-left: 4px solid var(--accent);
+    background: rgba(0,0,0,0.28);
+    font-size: 14px;
+    line-height: 1.7;
+    color: #dbe4ff;
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
+    animation-delay: 2.3s;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* ================= FEATURES ================= */
+.feature-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.feature {
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: rgba(109,166,255,0.18);
+    font-size: 12px;
+}
+
+/* ================= EVIDENCE ================= */
+.evidence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 26px;
+}
+
+.evidence {
+    background: rgba(0,0,0,0.35);
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid var(--accent-soft);
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
+}
+
+.evidence:nth-child(1) { animation-delay: 0.4s; }
+.evidence:nth-child(2) { animation-delay: 0.7s; }
+.evidence:nth-child(3) { animation-delay: 1.0s; }
+.evidence:nth-child(4) { animation-delay: 1.3s; }
+
+.evidence img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.caption {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #cfd8ff;
+}
+</style>
+</head>
+
+<body>
+
+<h1>⚙️ System Overview</h1>
+<p class="subtitle">
+This interface demonstrates the internal computational workflow of SympCare —
+from dataset ingestion to LightGBM-based clinical inference.
+</p>
+
+<!-- ================= DATASET INGESTION ================= -->
+<div class="section">
+    <h3>① Dataset Ingestion</h3>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="ingest-box">
+            <strong>Upload CBC Dataset (CSV)</strong><br>
+            <input type="file" name="dataset" accept=".csv" required><br>
+            <button type="submit">Execute Pipeline</button>
+        </div>
+    </form>
+</div>
+
+{% if info %}
+
+<!-- ================= PIPELINE ================= -->
+<div class="section">
+    <h3>② Internal Processing Timeline</h3>
+
+    <div class="timeline">
+        <div class="phase"><span>Phase 01</span><strong>Data Validation</strong></div>
+        <div class="phase"><span>Phase 02</span><strong>Feature Engineering</strong></div>
+        <div class="phase"><span>Phase 03</span><strong>LightGBM Inference</strong></div>
+        <div class="phase"><span>Phase 04</span><strong>Confidence Reasoning</strong></div>
+        <div class="phase"><span>Phase 05</span><strong>Result Aggregation</strong></div>
+    </div>
+
+    <div class="log">
+        ✔ Dataset loaded successfully ({{ info.rows }} records)<br>
+        ✔ Model schema validated (19/19 features matched)<br>
+        ✔ Order-sensitive feature vector constructed<br>
+        ✔ Batch inference executed using LightGBM<br>
+        ✔ Predictions below 55% confidence suppressed
+    </div>
+</div>
+
+<!-- ================= MODEL CORE ================= -->
+<div class="section">
+    <h3>③ Model Core Configuration</h3>
+    <p><b>Classifier:</b> LightGBM (Gradient Boosted Decision Trees)</p>
+    <p><b>Classes:</b> 13 disease categories</p>
+
+    <div class="feature-strip">
+        <div class="feature">wbc</div>
+        <div class="feature">neutrophils_abs</div>
+        <div class="feature">neutrophils_pct</div>
+        <div class="feature">lymphocytes_abs</div>
+        <div class="feature">lymphocytes_pct</div>
+        <div class="feature">monocytes_abs</div>
+        <div class="feature">monocytes_pct</div>
+        <div class="feature">… +12 more</div>
+    </div>
+</div>
+
+<!-- ================= EVIDENCE ================= -->
+<div class="section">
+    <h3>④ Model Evidence & Training Outcomes</h3>
+
+    <div class="evidence-grid">
+        <div class="evidence">
+            <img src="{{ url_for('static', filename='results/lgb_confusion_matrix.png') }}">
+            <div class="caption">Low inter-class ambiguity observed.</div>
+        </div>
+
+        <div class="evidence">
+            <img src="{{ url_for('static', filename='results/lgb_macro_roc.png') }}">
+            <div class="caption">Strong disease class separability.</div>
+        </div>
+
+        <div class="evidence">
+            <img src="{{ url_for('static', filename='results/lgbm_feature_importance.png') }}">
+            <div class="caption">Platelets and WBC dominate decisions.</div>
+        </div>
+
+        <div class="evidence">
+            <img src="{{ url_for('static', filename='results/lgbm_train_val_accuracy.png') }}">
+            <div class="caption">Training–validation convergence achieved.</div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+</body>
+</html>

@@ -3,25 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diagnosis - Sympcare</title>
+  <title>Assessment - SympCare</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
       font-family: "Poppins", Arial, sans-serif;
       background: radial-gradient(circle at top left, #0b0a23, #0b0a23 70%, #121040 100%);
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       color: white;
-      overflow: hidden;
-      position: relative;
+      overflow-x: hidden;
     }
 
-    /* 🧬 DNA BACKGROUND */
     .dna-bg {
       position: fixed;
       top: 12%;
@@ -35,44 +34,98 @@
     }
 
     .content {
-      text-align: center;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 40px 30px;
-      border-radius: 16px;
-      border: 1px solid rgba(109,166,255,0.25);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 0 25px rgba(109,166,255,0.25);
-      z-index: 1;
-      max-width: 520px;
-    }
+      margin-top: 60px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 25px 15px;       
+  border-radius: 14px;      
+  border: 1px solid rgba(109,166,255,0.25);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 20px rgba(109,166,255,0.25);  
+  max-width: 900px;         
+  width: 100%;
+  /* remove min-height so it fits content */
+}
+
 
     h1 {
-      font-size: 2.2rem;
-      margin-bottom: 15px;
+      font-size: 2.3rem;
+      margin-bottom: 6px;
+      text-align: center;
       color: #6da6ff;
       text-shadow: 0 0 12px rgba(109,166,255,0.6);
     }
 
-    p {
-      font-size: 1rem;
-      margin-bottom: 25px;
-      color: #dce6ff;
+    .subtitle {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #cfe0ff;
+      margin-bottom: 26px;
     }
 
-    /* 🔹 BUTTON ROW */
+    .box {
+      margin: 22px 0;
+      padding: 18px 20px;
+      background: rgba(109,166,255,0.12);
+      border: 1px solid rgba(109,166,255,0.35);
+      border-radius: 14px;
+      box-shadow: inset 0 0 15px rgba(109,166,255,0.2);
+    }
+
+    .box h3 {
+      margin-bottom: 12px;
+      font-size: 1.15rem;
+      color: #6da6ff;
+      text-shadow: 0 0 8px rgba(109,166,255,0.5);
+    }
+
+    .box p, .box li {
+      font-size: 0.95rem;
+      color: #e3ecff;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-icon {
+      cursor: pointer;
+      transition: transform 0.2s ease, fill 0.2s ease;
+    }
+
+    .info-icon:hover {
+      transform: scale(1.15);
+      fill: #a8c4ff;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: #b8ccff;
+      margin-top: 16px;
+      opacity: 0.9;
+    }
+
     .nav-row {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      gap: 18px;
+      gap: 14px;
+      margin-top: 26px;
+      flex-wrap: wrap;
     }
 
-    /* 🔹 BACK TEXT ONLY */
     .back-link {
       font-size: 0.95rem;
       color: #9fbfff;
       text-decoration: none;
-      transition: color 0.2s ease;
     }
 
     .back-link:hover {
@@ -80,45 +133,224 @@
       text-decoration: underline;
     }
 
-    /* 🔹 NEXT BUTTON */
     .next-btn {
       padding: 10px 22px;
-      background: rgba(109,166,255,0.15);
+      background: rgba(109,166,255,0.18);
       color: white;
       text-decoration: none;
-      border-radius: 8px;
-      border: 1px solid rgba(109,166,255,0.4);
+      border-radius: 10px;
+      border: 1px solid rgba(109,166,255,0.45);
       font-size: 0.95rem;
       font-weight: 500;
       transition: all 0.3s ease;
-    }index
+    }
 
     .next-btn:hover {
-      background: rgba(109,166,255,0.3);
+      background: rgba(109,166,255,0.32);
       transform: translateY(-2px);
     }
 
-    @media (max-width: 600px) {
+    h3[data-bs-toggle="collapse"] {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    @media (max-width: 700px) {
       .dna-bg { width: 1200px; }
       h1 { font-size: 1.9rem; }
-      .nav-row { flex-direction: column; gap: 12px; }
+      .nav-row { flex-direction: column; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- 🧬 DNA BACKGROUND -->
-  <img src="{{ url_for('static', filename='images/bg2.png') }}" class="dna-bg" alt="DNA Background">
+<img src="{{ url_for('static', filename='images/bg2.png') }}" class="dna-bg" alt="DNA Background">
 
-  <div class="content">
-    <h1>Diagnosis</h1>
-    <p>AI-driven health recommendations based on your data.</p>
+{% set DISEASE_PRECAUTIONS = {
+  "Anemia": ["Increase intake of iron-rich foods such as leafy greens and legumes","Avoid tea or coffee immediately after meals","Do not take iron supplements without medical advice"],
+  "Dengue": ["Maintain adequate hydration","Avoid painkillers like aspirin unless prescribed","Regularly monitor platelet counts"],
+  "Viral_Infection": ["Ensure adequate rest","Maintain fluid intake","Avoid unnecessary antibiotic use"],
+  "Bacterial_Infection": ["Do not self-medicate with antibiotics","Seek medical evaluation for persistent fever","Complete prescribed antibiotic course if started"],
+  "Thrombocytopenia": ["Avoid activities with bleeding risk","Monitor platelet levels regularly","Seek urgent care for bleeding symptoms"],
+  "Thrombocytosis": ["Maintain adequate hydration","Avoid smoking","Follow physician guidance to reduce clot risk"],
+  "Leukemia": ["Seek immediate hematology consultation","Avoid exposure to infections","Do not delay confirmatory testing"],
+  "Allergy": ["Avoid known allergens","Use medications only if prescribed","Seek medical care for severe reactions"],
+  "Parasitic_Infection": ["Maintain proper hygiene and sanitation","Avoid untreated food and water","Complete antiparasitic treatment as advised"],
+  "Sepsis": ["Seek immediate emergency medical care","Do not delay hospital evaluation","Monitor symptoms closely"],
+  "Polycythemia": ["Maintain adequate hydration","Avoid smoking","Follow hematologist recommendations"]
+} %}
 
-    <div class="nav-row">
-      <a href="{{ url_for('upload') }}" class="back-link">&larr; Back to Upload</a>
-      <a href="{{ url_for('insights') }}" class="next-btn">View Health Insights &rarr;</a>
+{% set NORMAL_CONTEXT = {
+  "cbc_reviewed": "Your uploaded CBC report has already been analyzed as part of this screening.",
+  "iron_optional": "Iron studies are optional and usually recommended only if symptoms develop later.",
+  "b12_optional": "Vitamin B12 and Folate tests are preventive and not required when CBC is normal unless advised by a doctor.",
+  "followup": "No immediate follow-up tests are required based on this screening."
+} %}
+
+<div class="content">
+
+  <h1>AI Screening Assessment</h1>
+  <div class="subtitle">AI-assisted health screening based on CBC patterns</div>
+
+  {% if disease != "Normal" %}
+
+  <div class="box">
+    <h3>Screening Result</h3>
+    <p>The analysis indicates a <strong>{{ disease.replace("_"," ") }}</strong> pattern based on observed CBC parameter deviations.</p>
   </div>
+
+  <div class="box">
+    <h3>Clinical Context</h3>
+    <p>This pattern is commonly associated with <strong>{{ disease.replace("_"," ") }}</strong>. The result represents an early screening insight and requires confirmatory clinical evaluation.</p>
+  </div>
+
+  {% if tests %}
+  <div class="box">
+    <h3>Recommended Diagnostic Tests</h3>
+    <ul>
+      {% for test in tests %}
+      <li>
+        🧪 {{ test }}
+        <svg class="info-icon" width="18" height="18"
+             data-bs-toggle="tooltip"
+             title="{{ test_info[test] }}"
+             fill="#6da6ff" viewBox="0 0 16 16">
+             <circle cx="8" cy="4.5" r="1"/>
+             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+             <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 .875-.252 1.043-.598l.088-.416z"/>
+        </svg>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <div class="box">
+    <h3>Precautions & Preventive Guidance</h3>
+    <ul>
+      {% for p in DISEASE_PRECAUTIONS.get(disease,[]) %}
+        <li>🛡️ {{ p }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="box">
+    <h3>Consult a Doctor If You Experience</h3>
+    <ul>
+      <li>⚠️ Persistent fatigue, fever, or weakness</li>
+      <li>⚠️ Unusual bleeding, bruising, or breathlessness</li>
+      <li>⚠️ Symptoms worsening over time</li>
+    </ul>
+  </div>
+
+  {% else %}
+
+  <div class="box">
+    <h3>Screening Result</h3>
+    <p>No abnormal CBC patterns were detected. Your uploaded report falls within expected reference ranges, indicating stable hematological health.</p>
+  </div>
+
+  <div class="box">
+    <h3>CBC Review Status</h3>
+    <p>✅ {{ NORMAL_CONTEXT["cbc_reviewed"] }}</p>
+  </div>
+
+  <div class="box">
+    <h3 data-bs-toggle="collapse" data-bs-target="#preventiveHealthList">
+      Preventive Health Insights ▼
+    </h3>
+    <ul class="collapse" id="preventiveHealthList">
+      <li>
+        🧪 Iron Studies (Optional)
+        <svg class="info-icon" width="18" height="18"
+             data-bs-toggle="tooltip"
+             title="{{ NORMAL_CONTEXT['iron_optional'] }}"
+             fill="#6da6ff" viewBox="0 0 16 16">
+             <circle cx="8" cy="4.5" r="1"/>
+             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+             <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 .875-.252 1.043-.598l.088-.416z"/>
+        </svg>
+      </li>
+      <li>
+        🧪 Vitamin B12 & Folate (Optional)
+        <svg class="info-icon" width="18" height="18"
+             data-bs-toggle="tooltip"
+             title="{{ NORMAL_CONTEXT['b12_optional'] }}"
+             fill="#6da6ff" viewBox="0 0 16 16">
+             <circle cx="8" cy="4.5" r="1"/>
+             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+             <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 .875-.252 1.043-.598l.088-.416z"/>
+        </svg>
+      </li>
+      <li class="note">{{ NORMAL_CONTEXT["followup"] }}</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h3 data-bs-toggle="collapse" data-bs-target="#healthGuidanceList">
+      Health Guidance ▼
+    </h3>
+    <ul class="collapse" id="healthGuidanceList">
+      <li>
+        ✅ Maintain a balanced diet and hydration
+        <svg class="info-icon" width="18" height="18"
+             data-bs-toggle="tooltip"
+             title="Eating a balanced diet with adequate hydration supports overall blood health and immune function."
+             fill="#6da6ff" viewBox="0 0 16 16">
+             <circle cx="8" cy="4.5" r="1"/>
+             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+             <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 .875-.252 1.043-.598l.088-.416z"/>
+        </svg>
+      </li>
+      <li>
+        ✅ Continue routine health monitoring
+        <svg class="info-icon" width="18" height="18"
+             data-bs-toggle="tooltip"
+             title="Regular check-ups and periodic CBC tests help track your blood health and detect changes early."
+             fill="#6da6ff" viewBox="0 0 16 16">
+             <circle cx="8" cy="4.5" r="1"/>
+             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+             <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 .875-.252 1.043-.598l.088-.416z"/>
+        </svg>
+      </li>
+      <li>
+        ✅ Seek medical advice if new symptoms appear
+        <svg class="info-icon" width="18" height="18"
+             data-bs-toggle="tooltip"
+             title="If you notice unusual fatigue, bruising, fever, or other symptoms, consult a healthcare professional promptly."
+             fill="#6da6ff" viewBox="0 0 16 16">
+             <circle cx="8" cy="4.5" r="1"/>
+             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+             <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 .875-.252 1.043-.598l.088-.416z"/>
+        </svg>
+      </li>
+    </ul>
+  </div>
+
+  {% endif %}
+
+  <p class="note">
+    ⚕️ <strong>Medical Disclaimer:</strong><br>
+    This AI-based assessment is intended for preliminary health screening only.
+    It does not replace professional medical diagnosis or treatment.
+    Always consult a qualified healthcare professional.
+  </p>
+
+  <div class="nav-row">
+    <a href="{{ url_for('upload') }}" class="back-link">&larr; Back to Upload</a>
+    <a href="{{ url_for('insights') }}" class="next-btn">View Health Insights &rarr;</a>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Initialize all tooltips
+  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+    new bootstrap.Tooltip(el);
+  });
+</script>
 
 </body>
 </html>
