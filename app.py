@@ -39,8 +39,11 @@ app = Flask(
 # LOAD ML MODEL
 # =====================================================
 print("🔄 Loading ML model...")
-model = joblib.load("models/lightgbm_model.pkl")
-label_encoder = joblib.load("models/label_encoder.pkl")
+BASE_DIR = Path(__file__).resolve().parent
+
+model = joblib.load(BASE_DIR / "models" / "lightgbm_model.pkl")
+label_encoder = joblib.load(BASE_DIR / "models" / "label_encoder.pkl")
+
 print("✅ Model loaded")
 
 # =====================================================
@@ -276,5 +279,9 @@ def analyze():
 # =====================================================
 # RUN SERVER
 # =====================================================
+import os
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+
