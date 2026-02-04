@@ -183,6 +183,127 @@
 
     .axis { stroke: #d6d6d6; stroke-width: 1; }
 
+    /* =========================================
+    RESPONSIVE AUTO-LAYOUT PATCH
+    (NON-DESTRUCTIVE)
+ ========================================= */
+ 
+ /* Tablets & small laptops */
+ @media (max-width: 1024px) {
+ 
+     /* Logo scales automatically */
+     .top-left-logo {
+         height: 180px;
+         top: 10px;
+         left: 10px;
+     }
+ 
+     /* Right hero image scales */
+     .right-img {
+         height: 700px;
+         right: 40px;
+         top: -120px;
+     }
+ 
+     /* Info box follows image */
+     .info-box {
+         width: 90%;
+         right: 5%;
+         top: 420px;
+     }
+ 
+     /* Text spacing adjustment */
+     h3, h1, h5, .divider {
+         margin-left: 120px;
+     }
+ 
+     .card {
+         margin-left: 60px;
+     }
+ }
+ 
+ /* Mobile devices */
+ @media (max-width: 768px) {
+ 
+     body {
+         padding: 30px;
+         overflow-y: auto;
+     }
+ 
+     /* Logo becomes smaller */
+     .top-left-logo {
+         height: 120px;
+         position: relative;
+         top: 0;
+         left: 0;
+         margin-bottom: 10px;
+     }
+ 
+     /* Text centers */
+     h3, h1, h5 {
+         margin-left: 0;
+         text-align: center;
+     }
+ 
+     .divider {
+         margin-left: 0;
+         margin-right: auto;
+         margin-left: auto;
+     }
+ 
+     /* Cards center */
+     .card {
+         margin-left: auto;
+         margin-right: auto;
+         width: 100%;
+         max-width: 420px;
+     }
+ 
+     /* Right image moves below content */
+     .right-img {
+         position: relative;
+         height: 420px;
+         top: 0;
+         right: 0;
+         margin: 40px auto 20px auto;
+         display: block;
+     }
+ 
+     /* Info box becomes stacked */
+     .info-box {
+         position: relative;
+         top: 0;
+         right: 0;
+         margin: 0 auto 30px auto;
+         width: 100%;
+         max-width: 420px;
+         height: auto;
+         flex-direction: column;
+         padding: 20px;
+     }
+ 
+     .divider-vertical {
+         display: none;
+     }
+ }
+ 
+ /* Small phones */
+ @media (max-width: 480px) {
+ 
+     h1 {
+         font-size: 42px;
+     }
+ 
+     .top-left-logo {
+         height: 100px;
+     }
+ 
+     .right-img {
+         height: 320px;
+     }
+ }
+ 
+
 </style>
 </head>
 

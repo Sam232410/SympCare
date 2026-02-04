@@ -1,0 +1,202 @@
+/* ================= BASE ================= */
+
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: #0b0a23;
+    color: white;
+    padding: 40px;
+    overflow-x: hidden;
+}
+
+/* ================= BACKGROUND ================= */
+
+.bg-glow {
+    position: fixed;
+    top: -200px;
+    left: -300px;
+    width: 1400px;
+    opacity: 0.75;
+    filter: blur(12px) drop-shadow(0 0 200px #6da6ff);
+    z-index: -2;
+}
+
+.dna-bg {
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    width: 1800px;
+    opacity: 0.12;
+    transform: translateX(-50%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+    max-width: 1400px;
+    margin: 0 auto 30px auto;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: clamp(70px, 8vw, 140px);
+    width: auto;
+    filter: drop-shadow(0 0 6px rgba(109,166,255,0.8));
+}
+
+/* ================= LAYOUT ================= */
+
+.layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    min-height: calc(100vh - 200px);
+}
+
+.left-section {
+    flex: 1;
+    min-width: 420px;
+}
+
+.right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ================= TEXT ================= */
+
+h3 { font-size: 30px; font-weight: 200; margin: 0; }
+
+h1 {
+    font-size: clamp(40px, 4.5vw, 57px);
+    margin: 0;
+    color: #6da6ff;
+    font-weight: 500;
+}
+
+h5 {
+    font-size: 20px;
+    color: #d6d6d6;
+    margin: 8px 0 28px;
+}
+
+.divider {
+    width: 360px;
+    height: 4px;
+    background: linear-gradient(90deg, #6da6ff, #a8c7ff, transparent);
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+
+/* ================= CARDS ================= */
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.card {
+    max-width: 460px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(109,166,255,0.25);
+    backdrop-filter: blur(18px);
+    text-decoration: none;
+    color: white;
+    transition: 0.25s ease;
+}
+
+.card:hover {
+    transform: translateX(10px);
+    background: rgba(125,155,255,0.16);
+}
+
+.title { font-size: 20px; font-weight: 600; }
+.subtext { font-size: 16px; margin-top: 6px; color: #c9c9c9; }
+
+/* ================= RIGHT IMAGE ================= */
+
+.right-img {
+    max-width: 100%;
+    max-height: 620px;
+    height: auto;
+    filter: drop-shadow(0 0 12px rgba(109,166,255,0.85));
+}
+
+/* ================= INFO BOX ================= */
+
+.info-box {
+    margin-top: -80px;
+    width: 100%;
+    max-width: 720px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(109,166,255,0.25);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.divider-vertical {
+    width: 1px;
+    height: 80%;
+    background: rgba(109,166,255,0.3);
+}
+
+.single-graph, .supported-tests {
+    flex: 1;
+    text-align: center;
+}
+
+.graph-title { font-size: 14px; color: #dce6ff; }
+.graph-value { font-size: 20px; font-weight: 700; color: #6da6ff; }
+
+.circle {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid #6da6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1024px) {
+    .layout {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .info-box {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    body { padding: 20px; }
+
+    .left-section { min-width: unset; }
+
+    .info-box {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .divider-vertical {
+        display: none;
+    }
+}
